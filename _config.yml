@@ -8,14 +8,3 @@ paginate: 15
 baseurl: /
 plugins: [jekyll-gist]
 permalink: /:year/:month/:title.html
-
-collections:
-    alumni:
-        output: true
-        permalink: /:collection/:name
-    staff:
-        output: true
-        permalink: /:collection/:name
-    students:
-        output: true
-        permalink: /:collection/:name
