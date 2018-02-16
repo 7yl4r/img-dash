@@ -3,7 +3,7 @@ const target_element_id = "weekly-history-view";
 // This date should be first images from aqua + 7d.
 // I think this is *before* that, but that is okay as long as the 7d cycle
 // aligns.
-const first_weekly_mean = new Date(2002, 06, 25);
+const first_weekly_mean = new Date(2002, 06, 24);
 
 const target_element = document.getElementById(target_element_id);
 
@@ -44,12 +44,16 @@ let pad = function(integer, padStr){
     return padStr.substring(0, padStr.length - str.length) + str;
 }
 
+// target_date from url else use current date
 // get dates for images last n_weeks
-const now = new Date();
+const query = window.location.search.substring(1).split("=");
+// assume query[0] == date
+const target_date = query[1] ? new Date(query[1]) : new Date();
+
 let weeks = [];
 
 for(let week = 0; week < n_weeks; week++){
-    let n_week = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let n_week = new Date(target_date.getFullYear(), target_date.getMonth(), target_date.getDate());
     n_week.setDate(n_week.getDate() - 7*week);
     weeks.push(n_week);
 }
@@ -68,15 +72,15 @@ weeks.forEach(function(week_date, week_n){  // for each week
     const j_day_0 = pad(Date.getJDate(start_date), "000");
     // console.log(start_date + " | " + year_0 + " | " + j_day_0);
 
-    let end_date = new Date(week_date);
-    end_date.setDate(end_date.getDate()+7);
+    let end_date = new Date(start_date);
+    end_date.setDate(end_date.getDate()+6);
     // week_date is now end datetime
     const year_f = end_date.getFullYear();
     const j_day_f = pad(Date.getJDate(end_date), "000");
     // console.log(end_date + " | " + year_f + " | " + j_day_f);
 
     const filename = `AQUA_${year_0}${j_day_0}_${year_f}${j_day_f}_7D_gcoos_chlor_a.png`
-    let img_path = `/srv/imars-objects/fgbnms_png_chlor_a_weekly/${filename}.png`;  // TODO: file fmt str
+    let img_path = `/srv/imars-objects/fgbnms_png_chlor_a_weekly/${filename}`;
     // append <img> elements with src
     const weeks_ago = n_weeks - week_n;
     target_element.insertAdjacentHTML(
