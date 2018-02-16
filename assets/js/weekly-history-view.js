@@ -80,14 +80,15 @@ weeks.forEach(function(week_date, week_n){  // for each week
     // console.log(end_date + " | " + year_f + " | " + j_day_f);
 
     const filename = `AQUA_${year_0}${j_day_0}_${year_f}${j_day_f}_7D_gcoos_chlor_a.png`
-    let img_path = `/srv/imars-objects/fgbnms_png_chlor_a_weekly/${filename}`;
+    let img_path = `http://imars-webserver-01.marine.usf.edu/fgbnms_png_chlor_a_7d/${filename}`;
     // append <img> elements with src
-    const weeks_ago = n_weeks - week_n;
+    const weeks_ago = n_weeks - week_n - 1;
     target_element.insertAdjacentHTML(
         'beforeend',
         (`
             <div class="three wide column">
                 -${weeks_ago} week(s) <br>
+                ${start_date.toDateString()} / ${end_date.toDateString()} <br>
                 <img src=${img_path} class="centered">
             </div>
         `)
