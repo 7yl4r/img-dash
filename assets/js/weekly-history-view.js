@@ -1,9 +1,5 @@
 const n_weeks           = 4;
 const target_element_id = "weekly-history-view";
-// This date should be first images from aqua + 7d.
-// I think this is *before* that, but that is okay as long as the 7d cycle
-// aligns.
-const first_weekly_mean = new Date(2002, 06, 24);
 
 const target_element = document.getElementById(target_element_id);
 
@@ -32,7 +28,7 @@ Date.getJDay = function(date){
 }
 Date.getJDate = function(date){
     // returns julian day (days since jan 1)
-    return Date.daysBetween(new Date(date.getFullYear(), 0, 1), date);
+    return Date.daysBetween(new Date(date.getFullYear(), 0, 0), date);
 }
 
 let pad = function(integer, padStr){
@@ -49,6 +45,10 @@ let pad = function(integer, padStr){
 const query = window.location.search.substring(1).split("=");
 // assume query[0] == date
 const target_date = query[1] ? new Date(query[1]) : new Date();
+// This date should be first images from aqua + 7d.
+// I think this is *before* that, but that is okay as long as the 7d cycle
+// aligns.
+const first_weekly_mean = new Date(target_date.getFullYear(), 0, 1);
 
 let weeks = [];
 
