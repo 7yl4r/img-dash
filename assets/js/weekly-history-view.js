@@ -1,29 +1,91 @@
 const n_weeks           = 4;
 const target_element_id = "weekly-history-view";
-const path_format_str   = 
-const img_element_template = "<img src=''
+// This date should be first images from aqua + 7d.
+// I think this is *before* that, but that is okay as long as the 7d cycle
+// aligns.
+const first_weekly_mean = new Date(2002, 06, 25);
 
 const target_element = document.getElementById(target_element_id);
 
-# get dates for images last n_weeks
+Date.daysBetween = function( date1, date2 ) {
+    /* returns # of days between two given Date objects
+    fractional days are rounded
+    */
+    var day_one=1000*60*60*24;
+
+    // Convert both dates to milliseconds
+    var date1_ms = date1.getTime();
+    var date2_ms = date2.getTime();
+
+    // Calculate the difference in milliseconds
+    var difference_ms = date2_ms - date1_ms;
+
+    // Convert back to days and return
+    return Math.round(difference_ms/day_one);
+}
+Date.getJDay = function(date){
+    // returns julian day (days since epoch 1970-01-01)
+    a = Math.floor((14 - date.getMonth()) / 12)
+    y = date.getFullYear() + 4800 - a
+    m = date.getMonth() + 12 * a - 3
+    return JDN = date.getDate() + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045
+}
+Date.getJDate = function(date){
+    // returns julian day (days since jan 1)
+    return Date.daysBetween(new Date(date.getFullYear(), 0, 1), date);
+}
+
+let pad = function(integer, padStr){
+    // pads an integer with n leading zeros set by pad
+    // example usage:
+    // pad(23, "000")
+    // >>> "023"
+    const str = "" + integer  // cast to string
+    return padStr.substring(0, padStr.length - str.length) + str;
+}
+
+// get dates for images last n_weeks
 const now = new Date();
-const this_week = new Date(now.getFullYear(), now.getMonth(), now.getDate()-now.getDay());  # TODO: Sunday?
 let weeks = [];
-weeks.push(this_week);
 
-for(let week = 1; week < n_weeks; i++){
-    weeks.push(new Date(this_week.getFullYear(), this_week.getMonth(), this_week.getDay - 7*week));
+for(let week = 0; week < n_weeks; week++){
+    let n_week = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    n_week.setDate(n_week.getDate() - 7*week);
+    weeks.push(n_week);
 }
+weeks = weeks.reverse();
+// console.log(weeks);
 
-weeks.foreach(week_date, week_n){  # for each week
-    # get filename
-    let img_path = `/srv/imars-objects/fgbnms_png_chlor_a_weekly/${week_date.getDay()}.png`;  # TODO: file fmt str
-    # append <img> elements with src
-    target_element.append(`
-        <div class="three wide column">
-            -${week_n} week(s)
-            <img src=${img_path} class="centered">`
-        </div>
-    `)
-}
+weeks.forEach(function(week_date, week_n){  // for each week
+    // === get filename
+    const days_since_first_mean = Date.daysBetween(first_weekly_mean, week_date);
+    // console.log(days_since_first_mean);
+    const days_to_mean_start = days_since_first_mean%7;
+    let start_date = new Date(week_date);
+    start_date.setDate(start_date.getDate()-days_to_mean_start);
+    // week_date is now the starting datetime
+    const year_0 = start_date.getFullYear();
+    const j_day_0 = pad(Date.getJDate(start_date), "000");
+    // console.log(start_date + " | " + year_0 + " | " + j_day_0);
 
+    let end_date = new Date(week_date);
+    end_date.setDate(end_date.getDate()+7);
+    // week_date is now end datetime
+    const year_f = end_date.getFullYear();
+    const j_day_f = pad(Date.getJDate(end_date), "000");
+    // console.log(end_date + " | " + year_f + " | " + j_day_f);
+
+    const filename = `AQUA_${year_0}${j_day_0}_${year_f}${j_day_f}_7D_gcoos_chlor_a.png`
+    let img_path = `/srv/imars-objects/fgbnms_png_chlor_a_weekly/${filename}.png`;  // TODO: file fmt str
+    // append <img> elements with src
+    const weeks_ago = n_weeks - week_n;
+    target_element.insertAdjacentHTML(
+        'beforeend',
+        (`
+            <div class="three wide column">
+                -${weeks_ago} week(s) <br>
+                <img src=${img_path} class="centered">
+            </div>
+        `)
+    );
+});
