@@ -1,3 +1,5 @@
+const target_date = parsed_query.date;
+
 const n_weeks           = 4;
 const target_element_id = "weekly-history-view";
 
@@ -68,14 +70,7 @@ let weekly_mean_formatter = function(strings, the_target_date){
     return strings[0] + year_0 + j_day_0 + "_" + year_f + j_day_f + strings[1]
 }
 
-// target_date from url else use current date
-// get dates for images last n_weeks
-const query = window.location.search.substring(1).split("=");
-// assume query[0] == date
-const target_date = query[1] ? new Date(query[1]) : new Date();
-
 let weeks = [];
-
 for(let week = 0; week < n_weeks; week++){
     let n_week = new Date(target_date.getFullYear(), target_date.getMonth(), target_date.getDate());
     n_week.setDate(n_week.getDate() - 7*week);
