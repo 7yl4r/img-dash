@@ -40,15 +40,39 @@ let pad = function(integer, padStr){
     return padStr.substring(0, padStr.length - str.length) + str;
 }
 
+let weekly_mean_formatter = function(strings, the_target_date){
+    /* tagged template function for getting filenames that look like
+     whatever_YYYYDDD_YYYYDDD_whatever from a single target date.\
+
+     Example usage for a file like `AQUA_2018043_2018045_7D_chl.png`:
+         weekly_mean_formatter`AQUA_${myDateObj}_7D_chl.png`
+    */
+    const first_weekly_mean = new Date(the_target_date.getFullYear(), 0, 1);
+    // This assumes the first 7d period of each year is yyyy-01-01/yyyy-01-07
+
+    const days_since_first_mean = Date.daysBetween(first_weekly_mean, the_target_date);
+    // console.log(days_since_first_mean);
+    const days_to_mean_start = days_since_first_mean%7;
+    let start_date = new Date(the_target_date);
+    start_date.setDate(start_date.getDate()-days_to_mean_start);
+    const year_0 = start_date.getFullYear();
+    const j_day_0 = pad(Date.getJDate(start_date), "000");
+    // console.log(start_date + " | " + year_0 + " | " + j_day_0);
+
+    let end_date = new Date(start_date);
+    end_date.setDate(end_date.getDate()+6);
+    const year_f = end_date.getFullYear();
+    const j_day_f = pad(Date.getJDate(end_date), "000");
+    // console.log(end_date + " | " + year_f + " | " + j_day_f);
+
+    return strings[0] + year_0 + j_day_0 + "_" + year_f + j_day_f + strings[1]
+}
+
 // target_date from url else use current date
 // get dates for images last n_weeks
 const query = window.location.search.substring(1).split("=");
 // assume query[0] == date
 const target_date = query[1] ? new Date(query[1]) : new Date();
-// This date should be first images from aqua + 7d.
-// I think this is *before* that, but that is okay as long as the 7d cycle
-// aligns.
-const first_weekly_mean = new Date(target_date.getFullYear(), 0, 1);
 
 let weeks = [];
 
@@ -61,25 +85,7 @@ weeks = weeks.reverse();
 // console.log(weeks);
 
 weeks.forEach(function(week_date, week_n){  // for each week
-    // === get filename
-    const days_since_first_mean = Date.daysBetween(first_weekly_mean, week_date);
-    // console.log(days_since_first_mean);
-    const days_to_mean_start = days_since_first_mean%7;
-    let start_date = new Date(week_date);
-    start_date.setDate(start_date.getDate()-days_to_mean_start);
-    // week_date is now the starting datetime
-    const year_0 = start_date.getFullYear();
-    const j_day_0 = pad(Date.getJDate(start_date), "000");
-    // console.log(start_date + " | " + year_0 + " | " + j_day_0);
-
-    let end_date = new Date(start_date);
-    end_date.setDate(end_date.getDate()+6);
-    // week_date is now end datetime
-    const year_f = end_date.getFullYear();
-    const j_day_f = pad(Date.getJDate(end_date), "000");
-    // console.log(end_date + " | " + year_f + " | " + j_day_f);
-
-    const filename = `AQUA_${year_0}${j_day_0}_${year_f}${j_day_f}_7D_gcoos_chlor_a.png`
+    const filename = weekly_mean_formatter`AQUA_${week_date}_7D_gcoos_chlor_a.png`
     let img_path = `http://imars-webserver-01.marine.usf.edu/fgbnms_png_chlor_a_7d/${filename}`;
     // append <img> elements with src
     const weeks_ago = n_weeks - week_n - 1;
@@ -88,7 +94,6 @@ weeks.forEach(function(week_date, week_n){  // for each week
         (`
             <div class="three wide column">
                 -${weeks_ago} week(s) <br>
-                ${start_date.toDateString()} / ${end_date.toDateString()} <br>
                 <img src=${img_path} class="centered">
             </div>
         `)
