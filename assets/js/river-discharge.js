@@ -1,4 +1,10 @@
+/*
+loads river discharge plots for target date.
 
+requires:
+    query-parse.js
+    utils.js
+*/
 $(document).ready(function () {
     $('.river-discharge-png').each(function(){
         // TODO: get "trinity" from http data attribute "this.data-river"
