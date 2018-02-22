@@ -23,8 +23,11 @@ weeks = weeks.reverse();
 // console.log(weeks);
 
 weeks.forEach(function(week_date, week_n){  // for each week
-    const filename = weekly_mean_formatter`FGB_A1km_chlor_a_${week_date}_7D_MEAN.jpg`
-    let img_path = `http://imars-webserver-01.marine.usf.edu/modis_aqua_fgbnms/png_chl_7d/${filename}`;
+    const img_host_basepath = "http://imars-webserver-01.marine.usf.edu/modis_aqua_fgbnms/png_chl_7d/"
+    const mean_filename = weekly_mean_formatter`FGB_A1km_chlor_a_${week_date}_7D_MEAN.jpg`
+    const anom_filename = weekly_mean_formatter`FGB_A1km_chlor_a_${week_date}_7D_ANOM.jpg`
+    let mean_path = `${img_host_basepath}${mean_filename}`;
+    let anom_path = `${img_host_basepath}${anom_filename}`;
     // append <img> elements with src
     const weeks_ago = n_weeks - week_n - 1;
     target_element.insertAdjacentHTML(
@@ -32,7 +35,8 @@ weeks.forEach(function(week_date, week_n){  // for each week
         (`
             <div class="four wide column">
                 -${weeks_ago} week(s) <br>
-                <img src=${img_path} class="centered">
+                <img src=${mean_path} class="centered">
+                <img src=${anom_path} class="centered">
             </div>
         `)
     );
