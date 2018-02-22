@@ -25,6 +25,12 @@ Date.getJDate = function(date){
     // returns julian day (days since jan 1)
     return Date.daysBetween(new Date(date.getFullYear(), 0, 0), date);
 }
+Date.prototype.addDays = function(days) {
+    // returns new date object given number of days past this date
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
 
 let pad = function(integer, padStr){
     // pads an integer with n leading zeros set by pad
