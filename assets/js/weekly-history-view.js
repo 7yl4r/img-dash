@@ -24,8 +24,8 @@ weeks = weeks.reverse();
 
 weeks.forEach(function(week_date, week_n){  // for each week
     const img_host_basepath = "http://imars-webserver-01.marine.usf.edu/modis_aqua_fgbnms/png_chl_7d/"
-    const mean_filename = weekly_mean_formatter`FGB_A1km_chlor_a_${week_date}_7D_MEAN.jpg`
-    const anom_filename = weekly_mean_formatter`FGB_A1km_chlor_a_${week_date}_7D_ANOM.jpg`
+    const mean_filename = weekly_mean_formatter`FGB_A1km_chlor_a_${week_date}_7D_MEAN.png`
+    const anom_filename = weekly_mean_formatter`FGB_A1km_chlor_a_${week_date}_7D_ANOM.png`
     let mean_path = `${img_host_basepath}${mean_filename}`;
     let anom_path = `${img_host_basepath}${anom_filename}`;
     // append <img> elements with src
