@@ -38,10 +38,14 @@ weeks.forEach(function(week_date, week_n){  // for each week
                     -${weeks_ago} week(s) <br>
                 </div>
                 <div class="row">
-                    <img src=${mean_path} class="centered" alt="[no data]">
+                    <a href=${mean_path}>
+                        <img src=${mean_path} class="centered" alt="[no data]">
+                    </a>
                 </div>
                 <div>
-                    <img src=${anom_path} class="centered" alt="[no data]">
+                    <a href=${anom_path}>
+                        <img src=${anom_path} class="centered" alt="[no data]">
+                    </a>
                 </div>
             </div>
         `)
