@@ -45,7 +45,7 @@ let pad = function(integer, padStr){
     return padStr.substring(0, padStr.length - str.length) + str;
 }
 
-let weekly_mean_formatter = function(strings, the_target_date){
+let weekly_mean_formatter = function(strings, the_target_date, long_last_week = true){
     /* tagged template function for getting filenames that look like
      whatever_YYYYDDD_YYYYDDD_whatever from a single target date.
      The time-range here is always 7days except for the last week of the year,
@@ -68,7 +68,7 @@ let weekly_mean_formatter = function(strings, the_target_date){
 
     let end_date = new Date(start_date);
     let week_length = 6;
-    if (j_day_0 == 358){  // if last week of year
+    if (long_last_week && j_day_0 == 358){  // if last week of year
         if (start_date.isLeapYear()) {
             week_length = 8;
         } else {
