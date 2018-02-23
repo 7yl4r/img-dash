@@ -36,19 +36,20 @@ header {
 }
 
 .site-logo {
-    max-width: 15%;
+    max-width: 9%;
     height: auto;
     margin: 0 auto;
 }
 
 .logo {
     width: 100%;
-    margin-top: 20%;
+    margin-top: 2%;
 }
 
 .site-description {
     font-family: "League Gothic", "Arial Narrow", Arial, sans-serif;
     text-align: center;
+    margin-top: 0;
 }
 
 

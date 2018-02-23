@@ -45,11 +45,22 @@ let pad = function(integer, padStr){
     return padStr.substring(0, padStr.length - str.length) + str;
 }
 
-let weekly_mean_formatter = function(strings, the_target_date, long_last_week = true){
+let weekly_mean_formatter = function(
+    strings,
+    the_target_date,
+    long_last_week = true
+){
     /* tagged template function for getting filenames that look like
      whatever_YYYYDDD_YYYYDDD_whatever from a single target date.
      The time-range here is always 7days except for the last week of the year,
      which is 8d on non leap years and 9d on leap years.
+
+     parameters
+     -------------
+     the_target_date: Date
+        js date object of the date we are looking for.
+     long_last_week: boolean
+
 
      Example usage for a file like `AQUA_2018043_2018045_7D_chl.png`:
          weekly_mean_formatter`AQUA_${myDateObj}_7D_chl.png`
