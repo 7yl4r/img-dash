@@ -31,6 +31,10 @@ Date.prototype.addDays = function(days) {
     dat.setDate(dat.getDate() + days);
     return dat;
 }
+Date.prototype.isLeapYear = function(){
+    // returns true if this year is a leap year
+    return new Date(this.getFullYear(), 1, 29).getDate() === 29;
+}
 
 let pad = function(integer, padStr){
     // pads an integer with n leading zeros set by pad
@@ -43,7 +47,9 @@ let pad = function(integer, padStr){
 
 let weekly_mean_formatter = function(strings, the_target_date){
     /* tagged template function for getting filenames that look like
-     whatever_YYYYDDD_YYYYDDD_whatever from a single target date.\
+     whatever_YYYYDDD_YYYYDDD_whatever from a single target date.
+     The time-range here is always 7days except for the last week of the year,
+     which is 8d on non leap years and 9d on leap years.
 
      Example usage for a file like `AQUA_2018043_2018045_7D_chl.png`:
          weekly_mean_formatter`AQUA_${myDateObj}_7D_chl.png`
@@ -61,7 +67,15 @@ let weekly_mean_formatter = function(strings, the_target_date){
     // console.log(start_date + " | " + year_0 + " | " + j_day_0);
 
     let end_date = new Date(start_date);
-    end_date.setDate(end_date.getDate()+6);
+    let week_length = 6;
+    if (j_day_0 == 358){  // if last week of year
+        if (start_date.isLeapYear()) {
+            week_length = 8;
+        } else {
+            week_length = 7;
+        }
+    }
+    end_date.setDate(end_date.getDate() + week_length);
     const year_f = end_date.getFullYear();
     const j_day_f = pad(Date.getJDate(end_date), "000");
     // console.log(end_date + " | " + year_f + " | " + j_day_f);
