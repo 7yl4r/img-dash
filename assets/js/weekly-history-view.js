@@ -33,10 +33,10 @@ weeks.forEach(function(week_date, week_n){  // for each week
     target_element.insertAdjacentHTML(
         'beforeend',
         (`
-            <div class="four wide column">
-                <div class="row">
-                    -${weeks_ago} week(s) <br>
-                </div>
+            <div class="four wide column center aligned">
+                <h5 class="row">
+                    -${weeks_ago} week(s)
+                </h5>
                 <div class="row">
                     <a href=${mean_path}>
                         <img src=${mean_path} class="centered" alt="[no data]">
