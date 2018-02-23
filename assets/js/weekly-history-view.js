@@ -34,9 +34,15 @@ weeks.forEach(function(week_date, week_n){  // for each week
         'beforeend',
         (`
             <div class="four wide column">
-                -${weeks_ago} week(s) <br>
-                <img src=${mean_path} class="centered">
-                <img src=${anom_path} class="centered">
+                <div class="row">
+                    -${weeks_ago} week(s) <br>
+                </div>
+                <div class="row">
+                    <img src=${mean_path} class="centered" alt="[no data]">
+                </div>
+                <div>
+                    <img src=${anom_path} class="centered" alt="[no data]">
+                </div>
             </div>
         `)
     );
