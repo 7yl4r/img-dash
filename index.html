@@ -4,19 +4,48 @@ title: Home
 cover: false
 ---
 
-<div class="ui centered grid stackable" id="nav-btns">
-    <div class="two wide column centered">
-        <a href="?date=2002-09-04"><<[2002-09-04]</a>
-    </div>
-    <div class="two wide column centered">
-        <a href="#" id='prev-btn'><[prev week]</a>
-    </div>
-    <div class="two wide column centered">
-        <a href="#" id='next-btn'>[next week]></a>
-    </div>
-    <div class="two wide column centered">
-        <a href="/">[today]>></a>
-    </div>
+<div class="ui centered grid row" id="nav-btns">
+    <a class="two wide column centered center aligned ui animated button"
+        href="?date=2002-09-04"
+    >
+        <div class="visible content">
+            <i class="angle double left icon"></i>
+        </div>
+        <div class="hidden content">
+            2002-09-04
+        </div>
+    </a>
+    <a class="two wide column centered center aligned ui animated button"
+        href="#" id='prev-btn'
+        >
+            <div class="visible content">
+                <i class="angle left icon"></i>
+            </div>
+            <div class="hidden content">
+                previous week
+            </div>
+        </a>
+    </a>
+    <a class="two wide column centered center aligned ui animated button"
+        href="#" id='next-btn'
+    >
+        <div class="visible content">
+            <i class="angle right icon"></i>
+        </div>
+        <div class="hidden content">
+            next week
+        </div>
+    </a>
+    <a class="two wide column centered center aligned ui animated button"
+        href="/"
+    >
+        <div class="visible content">
+            <i class="angle double right icon"></i>
+        </div>
+        <div class="hidden content">
+            today
+        </div>
+    </a>
 </div>
 
 <div class="ui centered grid stackable" id="weekly-history-view">
