@@ -60,11 +60,25 @@ let weekly_mean_formatter = function(
      the_target_date: Date
         js date object of the date we are looking for.
      long_last_week: boolean
-
+        The last week of the year is longer than 7 days by NASA tradition.
+        This means that the date range is a bit different for the last week
+        of the year, and the range will be 8 or 9 days rather than 7.
+        if long_last_week == false, this rule will be ignored and the last
+        week
 
      Example usage for a file like `AQUA_2018043_2018045_7D_chl.png`:
          weekly_mean_formatter`AQUA_${myDateObj}_7D_chl.png`
     */
+    if(the_target_date.getMonth() == 11 && the_target_date.getDate() > 25){
+        // the last remaining days of the year don't fall neatly into a 7d
+        // interval, so we roll back to the previous week.
+        return weekly_mean_formatter(
+            strings,
+            the_target_date.addDays(-6),
+            long_last_week
+        );
+    }
+
     const first_weekly_mean = new Date(the_target_date.getFullYear(), 0, 1);
     // This assumes the first 7d period of each year is yyyy-01-01/yyyy-01-07
 
