@@ -30,12 +30,16 @@ weeks.forEach(function(week_date, week_n){  // for each week
     let anom_path = `${img_host_basepath}${anom_filename}`;
     // append <img> elements with src
     const weeks_ago = n_weeks - week_n - 1;
+    let title = `-${weeks_ago} week(s)`
+    if (weeks_ago == 0){
+        title = "Week of " + target_date.toDateString();
+    }
     target_element.insertAdjacentHTML(
         'beforeend',
         (`
             <div class="four wide column center aligned">
                 <h5 class="row">
-                    -${weeks_ago} week(s)
+                    ${title}
                 </h5>
                 <div class="row">
                     <a href=${mean_path}>
