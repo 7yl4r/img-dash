@@ -1,5 +1,5 @@
 /*
-loads chl time series plots for target date.
+loads time series plots for target date.
 
 requires:
     query-parse.js
