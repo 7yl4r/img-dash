@@ -6,7 +6,7 @@ requires:
     utils.js
 */
 $(document).ready(function () {
-    $('.chl-ts-png').each(function(){
+    $('.timeseries-png').each(function(){
         const img_path = this.dataset.path;
         this.insertAdjacentHTML("beforeend",
             `
