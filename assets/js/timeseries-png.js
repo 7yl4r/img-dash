@@ -7,12 +7,15 @@ requires:
 */
 $(document).ready(function () {
     $('.chl-ts-png').each(function(){
-        const filename = this.dataset.region +
-            weekly_mean_formatter`_${parsed_query.date}_CHL.jpg${false}`;
-        let img_path = `http://imars-webserver-01.marine.usf.edu/modis_aqua_fgbnms/png_chl_ts_7d/${filename}`;
+        const filename =
+            weekly_mean_formatter(
+                [this.dataset.prepath, this.dataset.postpath],
+                parsed_query.date,
+                false
+            );
+        let img_path = `http://imars-webserver-01.marine.usf.edu/modis_aqua_fgbnms/${filename}`;
         this.insertAdjacentHTML("beforeend",
             `
-            ${this.dataset.region}
             <a href=${img_path}>
                 <img src=${img_path} alt="[no data]">
             </a>
