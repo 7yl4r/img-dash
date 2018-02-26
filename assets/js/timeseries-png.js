@@ -7,21 +7,13 @@ requires:
 */
 $(document).ready(function () {
     $('.chl-ts-png').each(function(){
-        const filename =
-            weekly_mean_formatter(
-                [this.dataset.prepath, this.dataset.postpath],
-                parsed_query.date,
-                false
-            );
-        let img_path = `http://imars-webserver-01.marine.usf.edu/modis_aqua_fgbnms/${filename}`;
+        const img_path = this.dataset.path;
         this.insertAdjacentHTML("beforeend",
             `
             <a href=${img_path}>
                 <img src=${img_path} alt="[no data]">
             </a>
         `)
-
-        this.src=img_path;
 
         const element = $(this);  // jquery element object
         element.popup({
