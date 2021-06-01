@@ -2,10 +2,7 @@ Simple dashboard with satellite images from USF IMaRS.
 
 :warning: Although still functional, work on this has shifted to building on top of grafana. :warning:
 
-
-
-The issue tracker here is also used to track issues related to grafana/graphite and the management dashboards in general.
-
+For info about these new "MBON Early-Alert Dashboards" built on grafana see [marinebon/mbon-dashboard-server](https://github.com/marinebon/mbon-dashboard-server/).
 
 
 --------------------------------------------------------------------
